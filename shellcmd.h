@@ -6,7 +6,11 @@
 
 #include   <fcntl.h>
 #include "parse.h"
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <netdb.h> 
 
+void error(const char *msg);
 void redirect( char * outputFile);
 int pipe_proc(int currFROMapp, int NumPipes,  char *apps[], int fd[2]);
 void FileInput(const char * infile);

@@ -8,6 +8,36 @@ void redirect( char * outputFile)
     close(frd);
 }
 
+void redirectToSocket ( int portno, char * ServerAddress)
+{
+    int sockfd , n;
+    struct sockaddr_in serv_addr;
+    struct hostent *server;
+     
+    sockfd = socket(AF_INET, SOCK_STREAM, 0);
+    if (sockfd < 0) 
+        error("ERROR opening socket");
+    server = gethostbyname(ServerAddress);
+    if (server == NULL) {
+        fprintf(stderr,"ERROR, no such host\n");
+        exit(0);
+    }
+    bzero((char *) &serv_addr, sizeof(serv_addr));
+    serv_addr.sin_family = AF_INET;
+    bcopy((char *)server->h_addr, 
+         (char *)&serv_addr.sin_addr.s_addr,
+         server->h_length);
+    serv_addr.sin_port = htons(portno);
+    if (connect(sockfd,(struct sockaddr *)     &serv_addr,sizeof(serv_addr)) < 0) 
+        error("ERROR connecting");
+    close(1);
+    dup(sockfd);
+    close(sockfd);
+
+}
+/*
+    this function redirects data from a file
+*/
 void FileInput(const char * infile)
 {
     int frd;
@@ -22,6 +52,31 @@ void FileInput(const char * infile)
     close(ifile);
 }
 
+
+
+/*
+    this handles reading from a port
+    takes port as integer
+    returns void.
+
+
+*/
+void socketInput(int port)
+{
+
+
+
+
+
+
+
+}
+
+
+
+
+
+//this handles setting up to rad from a pipe
 void ReadPipe( int fd[2])
 {
     close(fd[1]);
@@ -143,4 +198,10 @@ void pipeouput (int fd[2])
         fprintf(stderr, "pipeouput %d", fdesc);
         exit(EXIT_FAILURE);
     }
+}
+
+void error(const char *msg)
+{
+    perror(msg);
+    exit(0);
 }
