@@ -28,7 +28,7 @@ char* outfileRedir( char * prmstring);
 bool isRedirDiv ( const char * divStr);
 char * getRedir( char * prmstring, char dir);
 
-
+bool IsSockRedir(const char * input);
 
 
 #endif

@@ -158,6 +158,7 @@ char ** allocateArr( int numPipes, char** arrPipes, int itmSZ)
     return arrPipes;
 }
 
+/*Tests for input redirection*/
 bool hasInputRedir(const char * input)
 {
     bool retval = false;
@@ -170,6 +171,16 @@ bool hasInputRedir(const char * input)
         retval =false;
     }
     return retval; 
+}
+bool IsSockRedir(const char * input)
+{
+    bool retval =false;
+    int cnt = cntDelim(input, '@');
+    if(cnt>0)
+    {
+        retval =true;
+    }
+    return retval;
 }
 
 bool hasOutputRedir(const char * input)

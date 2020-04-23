@@ -8,33 +8,7 @@ void redirect( char * outputFile)
     close(frd);
 }
 
-void redirectToSocket ( int portno, char * ServerAddress)
-{
-    int sockfd , n;
-    struct sockaddr_in serv_addr;
-    struct hostent *server;
-     
-    sockfd = socket(AF_INET, SOCK_STREAM, 0);
-    if (sockfd < 0) 
-        error("ERROR opening socket");
-    server = gethostbyname(ServerAddress);
-    if (server == NULL) {
-        fprintf(stderr,"ERROR, no such host\n");
-        exit(0);
-    }
-    bzero((char *) &serv_addr, sizeof(serv_addr));
-    serv_addr.sin_family = AF_INET;
-    bcopy((char *)server->h_addr, 
-         (char *)&serv_addr.sin_addr.s_addr,
-         server->h_length);
-    serv_addr.sin_port = htons(portno);
-    if (connect(sockfd,(struct sockaddr *)     &serv_addr,sizeof(serv_addr)) < 0) 
-        error("ERROR connecting");
-    close(1);
-    dup(sockfd);
-    close(sockfd);
 
-}
 /*
     this function redirects data from a file
 */
@@ -53,24 +27,6 @@ void FileInput(const char * infile)
 }
 
 
-
-/*
-    this handles reading from a port
-    takes port as integer
-    returns void.
-
-
-*/
-void socketInput(int port)
-{
-
-
-
-
-
-
-
-}
 
 
 
@@ -113,11 +69,24 @@ int pipe_proc(int currFROMapp, int NumPipes,  char *apps[], int fd[2])
         bool binfile =hasInputRedir(apps[inIdx]);
         if(binfile)
         {
-           
-            infile = infileRedir(apps[inIdx]);
-            if( strlen(infile) >0   )
+            bool SockIN = IsSockRedir(apps[inIdx]);
+            if( SockIN)
             {
-                FileInput(infile);
+
+                int portnum;
+                // get port number  port num is rest of data in string after @
+                // find @ then get next
+                char * portStr = strchr(apps[inIdx], '@');
+                int portNum = atoi( (portStr+1));
+                socketInput(portnum);
+            }
+            else
+            {
+                infile = infileRedir(apps[inIdx]);
+                if( strlen(infile) >0   )
+                {
+                    FileInput(infile);
+                }
             }
         }
     }
@@ -169,7 +138,24 @@ int pipe_proc(int currFROMapp, int NumPipes,  char *apps[], int fd[2])
         redir =hasOutputRedir(trimmed);
         if(last&&redir)
         {
-            redirect( outfileRedir(trimmed));
+            if( hasOutputRedir(trimmed))
+            {
+                char * first = strchr(trimmed,'@');
+                ++first;
+                // get port number
+                int portno =0;
+                char * sportno = strrchr(trimmed, '.');
+                portno = atoi( sportno+1 );
+                // get server address.
+                char * servAddress =(char*) calloc(( sportno-first+1    ),sizeof(char)    );
+                strncpy(servAddress,first, (sportno-first));
+                redirectToSocket(portno,servAddress);
+                free (servAddress);
+            }
+            else
+            {
+                redirect( outfileRedir(trimmed));
+            }
         }
         int status =execvp(cmdPrms[0], cmdPrms );
         perror("execvp");

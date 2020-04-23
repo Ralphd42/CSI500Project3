@@ -3,12 +3,9 @@
 #include   <unistd.h>
 #include <sys/stat.h> 
 #include <sys/wait.h>
-
 #include   <fcntl.h>
 #include "parse.h"
-#include <sys/socket.h>
-#include <netinet/in.h>
-#include <netdb.h> 
+#include "socklib.h"
 
 void error(const char *msg);
 void redirect( char * outputFile);
