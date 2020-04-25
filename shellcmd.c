@@ -72,13 +72,11 @@ int pipe_proc(int currFROMapp, int NumPipes,  char *apps[], int fd[2])
             bool SockIN = IsSockRedir(apps[inIdx]);
             if( SockIN)
             {
-
-                int portnum;
                 // get port number  port num is rest of data in string after @
                 // find @ then get next
                 char * portStr = strchr(apps[inIdx], '@');
                 int portNum = atoi( (portStr+1));
-                socketInput(portnum);
+                socketInput(portNum);
             }
             else
             {
@@ -150,6 +148,7 @@ int pipe_proc(int currFROMapp, int NumPipes,  char *apps[], int fd[2])
                 char * servAddress =(char*) calloc(( sportno-first+1    ),sizeof(char)    );
                 strncpy(servAddress,first, (sportno-first));
                 redirectToSocket(portno,servAddress);
+                printf("AAAAAA\n\n");
                 free (servAddress);
             }
             else

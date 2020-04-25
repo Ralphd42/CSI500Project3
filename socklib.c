@@ -21,10 +21,15 @@ void redirectToSocket ( int portno, char * ServerAddress)
          server->h_length);
     serv_addr.sin_port = htons(portno);
     if (connect(sockfd,(struct sockaddr *)     &serv_addr,sizeof(serv_addr)) < 0) 
+    {    
+        printf("\nPort %d addy %s", portno,ServerAddress);
         error("ERROR connecting");
-    close(1);
-    dup(sockfd);
+    }
+    
+    dup2(sockfd,STDOUT_FILENO);
     close(sockfd);
+     
+    //fflush(stdout);
 
 }
 
@@ -38,6 +43,7 @@ void redirectToSocket ( int portno, char * ServerAddress)
 */
 void socketInput(int portno)
 {
+    printf("\nport no %d\n", portno);
     int sockfd, newsockfd ;
     socklen_t clilen;
     char buffer[256];
@@ -61,7 +67,7 @@ void socketInput(int portno)
          error("ERROR on accept");
     bzero(buffer,256);
     close(0);
-    dup(sockfd);
-    close(sockfd);
+    dup(newsockfd);
+    close(newsockfd);
 }
 

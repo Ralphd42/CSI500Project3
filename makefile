@@ -1,7 +1,7 @@
 CC = gcc
 CFLAGS = 
 LDFLAGS =
-OBJFILES = shellcmd.o parse.o shell.o  
+OBJFILES = shellcmd.o parse.o shell.o socklib.o
 TARGET = shell.exe
 all: $(TARGET)
 $(TARGET): $(OBJFILES)
