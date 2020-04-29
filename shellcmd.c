@@ -138,7 +138,7 @@ int pipe_proc(int currFROMapp, int NumPipes,  char *apps[], int fd[2])
         {
             if( hasOutputRedir(trimmed))
             {
-                char * first = strchr(trimmed,'@');
+                char * first = strchr(trimmed,':');
                 ++first;
                 // get port number
                 int portno =0;
@@ -148,7 +148,6 @@ int pipe_proc(int currFROMapp, int NumPipes,  char *apps[], int fd[2])
                 char * servAddress =(char*) calloc(( sportno-first+1    ),sizeof(char)    );
                 strncpy(servAddress,first, (sportno-first));
                 redirectToSocket(portno,servAddress);
-                printf("AAAAAA\n\n");
                 free (servAddress);
             }
             else

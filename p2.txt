@@ -1,0 +1,46 @@
+Operating Systems   Project 3  
+University at Albany
+Department of Computer Science
+CSI 500
+Purpose of the Project
+The goal of this exercise is to gain an understanding of distributed processing by extending the functionality of a simple Linux shell behavior. The system to be created will be able to manipulate the contents stored in other machines that share a network connection. 
+
+The Details
+Your solution must modify the file redirect capabilities of the standard Linux shell to allow both the input and the output of shell commands to be redirected to different machines connected through a shared network. Your solution may combine the code you developed for both project1 and assignment 2. The following syntax is to be followed by your new redirect command:
+    1. commands >@s port-number
+The result of commands will be redirected to server s with the provided port number.
+    2. commands <@s port-number
+Similar to previous command but for input data.
+    3. commands >@c server-host-name.port-number
+The result of commands will be redirected to client c with host name and number as provided.
+    4. commands <@c server-host-name.port-number
+Similar to previous command but for input data.
+
+Due Date
+The project is due through Blackboard by 11:59 PM on Wednesday, April 22nd, 2020. 
+Expectation
+Your program should be layered, modularized and well commented. The following is a tentative marking scheme and what is expected to be submitted for this assignment:
+
+
+    1. External Documentation including [5-10 pages]
+        a. Title page
+        b. A table of contents
+        c. [20%] System documentation
+            i. A high-level data flow diagram for the system
+            ii. A list of routines and their brief descriptions
+            iii. Implementation details
+        d. [5%] Test documentation
+            i. How you tested your program
+            ii. Testing outputs
+        e. [5%] User documentation
+            i. Where is your source
+            ii. How to run your program
+            iii. Describe parameter (if any)
+
+    2. Source Code
+        a. [65%] Correctness
+        b. [5%] Programming style
+            i. Layering
+            ii. Readability
+            iii. Comments
+            iv. Efficiency

@@ -1,5 +1,9 @@
 #include"socklib.h"
-
+/*
+    redirectToSocket
+    takes a port number and a server ipaddress or name
+    it redirects ouput channel to socket on port and address
+*/
 void redirectToSocket ( int portno, char * ServerAddress)
 {
     int sockfd , n;
@@ -22,14 +26,14 @@ void redirectToSocket ( int portno, char * ServerAddress)
     serv_addr.sin_port = htons(portno);
     if (connect(sockfd,(struct sockaddr *)     &serv_addr,sizeof(serv_addr)) < 0) 
     {    
-        printf("\nPort %d addy %s", portno,ServerAddress);
+         
         error("ERROR connecting");
     }
     
     dup2(sockfd,STDOUT_FILENO);
     close(sockfd);
      
-    //fflush(stdout);
+    
 
 }
 
@@ -38,12 +42,12 @@ void redirectToSocket ( int portno, char * ServerAddress)
     this handles reading from a port
     takes port as integer
     returns void.
-
+    It redirects input from port to appllication
 
 */
 void socketInput(int portno)
 {
-    printf("\nport no %d\n", portno);
+     
     int sockfd, newsockfd ;
     socklen_t clilen;
     char buffer[256];
