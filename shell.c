@@ -1,12 +1,13 @@
 #include  "parse.h"
 #include "shellcmd.h"
-
+void prompt();
 int main(int argc, char *argv[])
 {
     char **params;
     int readlen =0;
     char * inBuff ;
     size_t bufflen =0;
+    prompt();
     readlen=getline(&inBuff,&bufflen,stdin);
     //while(readlen!=-1)
     while( strncmp(inBuff,"exit",4)!=0)
@@ -37,9 +38,16 @@ int main(int argc, char *argv[])
             fflush(stdout);
         }
         fflush(stdout);
+         
+        prompt();
         readlen=getline(&inBuff,&bufflen,stdin);
     }
     return (EXIT_SUCCESS);
 }
 
 
+void prompt()
+{
+    printf("ralphShell$");
+    fflush(stdout);
+}
