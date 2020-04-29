@@ -37,7 +37,7 @@ int main( )
     sockfd = socket(AF_INET, SOCK_STREAM, 0);
     if (sockfd < 0) 
         error("ERROR opening socket");
-    server = gethostbyname("127.0.0.1");
+    server = gethostbyname("192.168.1.15");
     if (server == NULL) {
         fprintf(stderr,"ERROR, no such host\n");
         exit(0);

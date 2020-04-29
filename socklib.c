@@ -9,7 +9,7 @@ void redirectToSocket ( int portno, char * ServerAddress)
     int sockfd , n;
     struct sockaddr_in serv_addr;
     struct hostent *server;
-     
+    ;
     sockfd = socket(AF_INET, SOCK_STREAM, 0);
     if (sockfd < 0) 
         error("ERROR opening socket");
@@ -30,6 +30,7 @@ void redirectToSocket ( int portno, char * ServerAddress)
         error("ERROR connecting");
     }
     
+    fflush(stdout);
     dup2(sockfd,STDOUT_FILENO);
     close(sockfd);
      

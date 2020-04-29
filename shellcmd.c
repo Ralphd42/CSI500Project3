@@ -138,11 +138,11 @@ int pipe_proc(int currFROMapp, int NumPipes,  char *apps[], int fd[2])
         {
             if( hasOutputRedir(trimmed))
             {
-                char * first = strchr(trimmed,':');
+                char * first = strchr(trimmed,'@');
                 ++first;
                 // get port number
                 int portno =0;
-                char * sportno = strrchr(trimmed, '.');
+                char * sportno = strrchr(trimmed, ':');
                 portno = atoi( sportno+1 );
                 // get server address.
                 char * servAddress =(char*) calloc(( sportno-first+1    ),sizeof(char)    );
